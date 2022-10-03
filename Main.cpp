@@ -30,33 +30,41 @@ void ReadFile(fstream &file,DelimBuffer &Buff,ZipCode zipCodes[])
 }
 int main()
 {
+    const int NUMSTATES = 57;
     DelimBuffer Buff(',',10000000);
     static ZipCode zipCodes[MAX];
     fstream file;
-    int counter=0;
+    const string STATE_LIST[NUMSTATES] = {"AA","AK","AL","AP","AR","AZ","CA"
+                        ,"CO","CT","DC","DE","FL","FM"
+                        ,"GA","HI","IA","ID","IL"
+                        ,"IN","KS","KY","LA","MA"
+                        ,"MD","ME","MH","MI","MN","MO"
+                        ,"MP","MS","MT","NC","ND","NE"
+                        ,"NH","NJ","NM","NV","NY"
+                        ,"OH","OK","OR","PA","PW","RI"
+                        ,"SC","SD","TN","TX","UT"
+                        ,"VA","VT","WA","WI","WV","WY"};
   
     OpenFile(file);
     //reads one records per loop, saves records into buffer, and then loads zipcode array with record from buffer
     ReadFile(file,Buff,zipCodes); 
 
     //sort records aplhabetically
-    ...
 
     //compute Easternmost (least longitude), Westernmost,Northernmost (greatest latitude), and Southernmost Zip Code for a given state
-    ...
+    
 
 
     //print info(Table)
     //format:
     //State Easternmost Westernmost Northernmost Southernmost
-    ...
 
 
 
     //testing printing
     for(int x=0;x<MAX;x++)
     {
-        cout<<"1:"<<zipCodes[x].Longtitude<<endl;
+        cout<<zipCodes[x].Zipcode<<zipCodes[x].State <<zipCodes[x].County <<zipCodes[x].PlaceName <<zipCodes[x].Latitude <<zipCodes[x].Longtitude <<endl;
     }
    
     

@@ -51,6 +51,8 @@ int main()
 
     //sort records aplhabetically
 
+    /*maybe use a 2D array?*/
+
     //compute Easternmost (least longitude), Westernmost,Northernmost (greatest latitude), and Southernmost Zip Code for a given state
     
 
@@ -68,9 +70,6 @@ int main()
     }
    
     
-     
-    
- 
 
 
 }

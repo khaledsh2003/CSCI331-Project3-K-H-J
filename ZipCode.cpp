@@ -1,11 +1,17 @@
+/**
+   
+/*@file name: ZipCode.cpp */
+
+
 #include "ZipCode.h"
 
-
+/// @brief clears zipCode data members
 ZipCode::ZipCode ()
 {
 	Clear ();
 }
 
+/// @brief clears zipCode data members
 void ZipCode::Clear ()
 {
 	Zipcode [0]=0;
@@ -16,6 +22,9 @@ void ZipCode::Clear ()
 	Longtitude [0]=0;
 }
 
+/// @brief unpacks buffer to zipcode data members
+/// @param Buffer 
+/// @return failing or passing of unpacking
 int ZipCode::Unpack (DelimBuffer & Buffer)
 {
 	int result;
@@ -27,16 +36,7 @@ int ZipCode::Unpack (DelimBuffer & Buffer)
 	result = result && Buffer . Unpack (Longtitude);
 	return result;
 }
-void ZipCode::Print (ostream & stream)
-{
-	stream << "Person:"
-		<< "\t Last Name '"<<Zipcode<<"'\n"
-		<< "\tFirst Name '"<<PlaceName<<"'\n"
-		<< "\t   Address '"<<State<<"'\n"
-		<< "\t      City '"<<County<<"'\n"
-		<< "\t     State '"<<Latitude<<"'\n"
-		<< "\t  Zip Code '"<<Longtitude<<"'\n" <<flush;
-}
+
 
 
 

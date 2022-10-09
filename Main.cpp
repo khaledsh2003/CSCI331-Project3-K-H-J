@@ -9,8 +9,8 @@
 #include "ZipCode.h"
 #include <iomanip> 
 #include <limits>
-#define MAX 40933       /// number of records
-#define NUMSTATES 57    /// number of states in the records
+#define MAX 40933       // number of records
+#define NUMSTATES 57    // number of states in the records
 
 
 /// @brief Opens a file stream for reading and ignore first 3 lines of the csv(header)
@@ -24,7 +24,7 @@ int OpenFile(fstream & stream)
 		cout << "File open failed!" <<endl;
 		return 0;
 	}
-    stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');       /// skip line
+    stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');       // skip line
     stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');       
     stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     return 1;
@@ -39,8 +39,8 @@ void ReadFile(fstream &file,DelimBuffer &Buff,ZipCode zipCodes[])
     int counter=0;
     while(!file.eof())
     {
-	    Buff.Read(file);                    ///read into buffer
-        zipCodes[counter].Unpack(Buff);     ///unpack to zipcode
+	    Buff.Read(file);                    //read into buffer
+        zipCodes[counter].Unpack(Buff);     //unpack to zipcode
         counter++;
     }
 }
@@ -56,9 +56,9 @@ void SortRecords(const string STATE_LIST[NUMSTATES],ZipCode zipCodes[MAX],ZipCod
     {
         for(int y=0;y<MAX;y++)
         {
-            if(STATE_LIST[x]==zipCodes[y].State) /// find a state the matches the ordered states array
+            if(STATE_LIST[x]==zipCodes[y].State) // find a state the matches the ordered states array
             {
-               sortedZipCodes[i]=zipCodes[y]; /// move the state to array in a sorted way
+               sortedZipCodes[i]=zipCodes[y]; // move the state to array in a sorted way
                i++;
             }
         }
@@ -74,7 +74,7 @@ void print(const string STATE_LIST[NUMSTATES],ZipCode sortedZipCodes[MAX])
 {
     int y=0;
     int counter=0;
-    /// Intialize to find min and max for each zipcode
+    // Intialize to find min and max for each zipcode
     double Easternmost = stof(sortedZipCodes[0].Longtitude);
     double Northernmost = stof(sortedZipCodes[0].Latitude);
     double Westernmost= stof(sortedZipCodes[0].Longtitude);
@@ -84,7 +84,7 @@ void print(const string STATE_LIST[NUMSTATES],ZipCode sortedZipCodes[MAX])
     string WesternmostZipcode="";
     string SouthernmostZipcode="";
 
-    ///print formatted table header
+    //print formatted table header
     cout
         << left
         << setw(10)
@@ -103,41 +103,64 @@ void print(const string STATE_LIST[NUMSTATES],ZipCode sortedZipCodes[MAX])
         << "Southernmost"
         << endl;
    
-    ///loop throught the states array
+    //loop throught the states array
     for(int x=0;x<NUMSTATES;x++)
     {
-        ///loop through the records array
+        //loop through the records array
         for(y;y<MAX;y++)
         {
-            ///if matching state is found in the sorted states compute Easternmost, Northernmost,Westernmost,Southernmost
+            //if matching state is found in the sorted states compute Easternmost, Northernmost,Westernmost,Southernmost
             if(STATE_LIST[x]==sortedZipCodes[y].State)
             {
-
+                
                 counter++;
-                if(Easternmost >= stof(sortedZipCodes[y].Longtitude))  ///least longitude
+                if(Easternmost >= stof(sortedZipCodes[y].Longtitude))  //least longitude
                 {
                     Easternmost = stof(sortedZipCodes[y].Longtitude);
                     EasternmostZipcode=sortedZipCodes[y].Zipcode;
                 }
-                if(Northernmost <= stof(sortedZipCodes[y].Latitude)) ///greatest latitude)
+                if(Northernmost <= stof(sortedZipCodes[y].Latitude)) //greatest latitude)
                 {
                     Northernmost = stof(sortedZipCodes[y].Latitude);
                     NorthernmostZipcode=sortedZipCodes[y].Zipcode;
                 }
-                 if(Westernmost <= stof(sortedZipCodes[y].Longtitude))///greatest longitude
+                 if(Westernmost <= stof(sortedZipCodes[y].Longtitude))//greatest longitude
                 {
                     Westernmost = stof(sortedZipCodes[y].Longtitude);
                     WesternmostZipcode=sortedZipCodes[y].Zipcode;
                 }
-                if(Southernmost >= stof(sortedZipCodes[y].Latitude))///least latitude
+                if(Southernmost >= stof(sortedZipCodes[y].Latitude))//least latitude
                 {
                     Southernmost = stof(sortedZipCodes[y].Latitude);
                     SouthernmostZipcode=sortedZipCodes[y].Zipcode;
                 }
+
+                if(counter==MAX) // if reached last state and finished it's computation then print info for state and break
+                {
+                     cout
+                    << left
+                    << setw(10)
+                    << STATE_LIST[x]
+                    << left
+                    << setw(15)
+                    << EasternmostZipcode
+                    << left
+                    << setw(15)
+                    << WesternmostZipcode
+                    << left
+                    << setw(15)
+                    << NorthernmostZipcode
+                    << left
+                    << setw(15)
+                    << SouthernmostZipcode
+                    << endl;
+                }
+
+                
             }
-            else
+            else 
             {
-                ///if a different state is found in the record then print the previous state information and computations
+                //if a different state is found in the record then print the previous state information and computations
                  cout
                 << left
                 << setw(10)
@@ -156,9 +179,9 @@ void print(const string STATE_LIST[NUMSTATES],ZipCode sortedZipCodes[MAX])
                 << SouthernmostZipcode
                 << endl;
    
-                ///get the index to reintilize the zipcodes
+                //get the index to reintilize the zipcodes
                 y=counter;
-                ///reintilize the zipcodes
+                //reintilize the zipcodes
                 Easternmost = stof(sortedZipCodes[y].Longtitude);
                 Northernmost = stof(sortedZipCodes[y].Latitude);
                 Westernmost= stof(sortedZipCodes[y].Longtitude);
@@ -175,7 +198,7 @@ int main()
 {
     DelimBuffer Buff(',',10000000);
     static ZipCode zipCodes[MAX];          
-    static ZipCode sortedZipCodes[MAX];     ///sorted zipCode array
+    static ZipCode sortedZipCodes[MAX];     //sorted zipCode array
     fstream file;
     const string STATE_LIST[NUMSTATES] = {"AA","AK","AL","AP","AR","AZ","CA"
                         ,"CO","CT","DC","DE","FL","FM"
@@ -188,13 +211,13 @@ int main()
                         ,"SC","SD","TN","TX","UT"
                         ,"VA","VT","WA","WI","WV","WY"};
   
-    ///open file
+    //open file
     OpenFile(file);
     //reads one records per loop, saves records into buffer, and then loads zipcode array with record from buffer
     ReadFile(file,Buff,zipCodes); 
-    ///sorts records alpha by state
+    //sorts records alpha by state
     SortRecords(STATE_LIST,zipCodes,sortedZipCodes);
-    ///compute and print Easternmost, Northernmost,Westernmost,Southernmost 
+    //compute and print Easternmost, Northernmost,Westernmost,Southernmost 
     print(STATE_LIST,sortedZipCodes);
 
 }
